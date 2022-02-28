@@ -17,17 +17,14 @@ from flask import send_from_directory
 ###
 
 def get_uploaded_images():
-    rootdir = []
-    
-    for subdir, dirs, files in os.walk(rootdir + '/uploads'):
-        for file in files:
-            rootdir.append(file)
-    return rootdir
+      upload_dir = app.config.get('UPLOAD_FOLDER')
+      return sorted(os.listdir(upload_dir))
 
 @app.route("/uploads/<filename>")
 def get_image(filename):
-      root_dir = os.getcwd()
-      return send_from_directory(os.path.join(root_dir, app.config['UPLOAD_FOLDER']), filename)
+    up_images = app.config.get('UPLOAD_FOLDER')
+    return send_from_directory(up_images, filename)
+     
 
 @app.route('/files')
 def files():
